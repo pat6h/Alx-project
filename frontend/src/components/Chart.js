@@ -1,24 +1,39 @@
-import React from 'react';
-import { Pie } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import React from "react";
+import { PieChart, Pie, Cell, Legend, Tooltip, ResponsiveContainer } from "recharts";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+const COLORS = ["#ffe484", "#36d1c4", "#36a2eb", "#2bff8a", "#b0e1f7", "#ff3b3b", "#ffba93", "#ff67d2"];
 
 export default function Chart({ data, prices }) {
-  const labels = data.map(item => item.symbol);
-  const values = data.map(item => (prices[item.symbol]?.usd || 0) * item.amount);
+  if (!data.length) return null;
+  const chartData = data.map((item, i) => ({
+    name: item.symbol.toUpperCase(),
+    value: ((prices[item.symbol]?.usd || 0) * item.amount)
+  })).filter(d => d.value > 0);
 
   return (
-    <div style={{ width: 400, margin: 'auto' }}>
-      <Pie
-        data={{
-          labels,
-          datasets: [{ data: values, backgroundColor: ['#ffce56','#36a2eb','#ff6384','#4bc0c0'] }]
-        }}
-        options={{
-          plugins: { legend: { position: 'bottom' } }
-        }}
-      />
+    <div style={{ margin: "40px 0", padding: 20, background: "#22283a", borderRadius: 14 }}>
+      <h4 style={{ color: "#ffe484", marginBottom: 18 }}>Portfolio Allocation</h4>
+      <ResponsiveContainer width="100%" height={320}>
+        <PieChart>
+          <Pie
+            data={chartData}
+            dataKey="value"
+            nameKey="name"
+            cx="50%"
+            cy="50%"
+            outerRadius={100}
+            innerRadius={50}
+            fill="#8884d8"
+            label
+          >
+            {chartData.map((entry, index) => (
+              <Cell key={entry.name} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Legend />
+          <Tooltip />
+        </PieChart>
+      </ResponsiveContainer>
     </div>
   );
 }
