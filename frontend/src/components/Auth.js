@@ -1,128 +1,65 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { motion } from 'framer-motion';
+import React, { useState } from "react";
+import axios from "axios";
 
 export default function Auth({ onLogin }) {
-  const [mode, setMode] = useState('login');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [msg, setMsg] = useState('');
+  const [isLogin, setIsLogin] = useState(true);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [msg, setMsg] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleAuth = async (e) => {
     e.preventDefault();
+    setMsg("...");
     try {
-      if (mode === 'login') {
-        const { data } = await axios.post('http://localhost:5000/api/auth/login', { username, password });
+      const url = `http://localhost:5000/api/auth/${isLogin ? "login" : "register"}`;
+      const { data } = await axios.post(url, { username, password });
+      if (isLogin && data.token) {
+        setMsg("Logged in!");
         onLogin(data.token);
-      } else {
-        await axios.post('http://localhost:5000/api/auth/register', { username, password });
-        setMsg('Registered! You can now log in.');
-        setMode('login');
+      } else if (!isLogin) {
+        setMsg("Registered! You can login now.");
+        setIsLogin(true);
       }
     } catch (err) {
-      setMsg(err.response?.data?.msg || 'Error');
+      setMsg(err.response?.data?.msg || "Auth error");
     }
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7 }}
-      style={{
-        maxWidth: 350,
-        margin: "0 auto",
-        background: "rgba(28,36,54,0.93)",
-        padding: "36px 30px 30px 30px",
-        borderRadius: 18,
-        boxShadow: "0 8px 40px #0006",
-        color: "#fff"
-      }}
-    >
-      <motion.h2
-        initial={{ scale: 0.9 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 0.5 }}
-        style={{
-          color: "#ffe484",
-          fontWeight: "bold",
-          fontSize: 28,
-          marginBottom: 8,
-          letterSpacing: 1
-        }}
-      >
-        {mode === 'login' ? 'Sign in' : 'Create Account'}
-      </motion.h2>
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 18, marginTop: 22 }}>
+    <div style={{
+      maxWidth: 350, margin: "100px auto", background: "#21243a", padding: 28,
+      borderRadius: 16, color: "#ffe484", boxShadow: "0 2px 24px #0008"
+    }}>
+      <h2 style={{ textAlign: "center" }}>{isLogin ? "Login" : "Register"}</h2>
+      <form onSubmit={handleAuth} style={{ display: "flex", flexDirection: "column", gap: 14, marginTop: 22 }}>
         <input
+          type="text"
           placeholder="Username"
+          autoFocus
           value={username}
           onChange={e => setUsername(e.target.value)}
-          autoComplete="username"
+          style={{ borderRadius: 8, border: "1px solid #36d1c4", padding: 9, background: "#292e49", color: "#fff" }}
           required
-          style={{
-            padding: "11px 12px",
-            borderRadius: 7,
-            border: "1.2px solid #36d1c4",
-            fontSize: 16,
-            background: "#252b38",
-            color: "#fff"
-          }}
         />
         <input
-          placeholder="Password"
           type="password"
+          placeholder="Password"
           value={password}
-          autoComplete="current-password"
           onChange={e => setPassword(e.target.value)}
+          style={{ borderRadius: 8, border: "1px solid #36d1c4", padding: 9, background: "#292e49", color: "#fff" }}
           required
-          style={{
-            padding: "11px 12px",
-            borderRadius: 7,
-            border: "1.2px solid #36d1c4",
-            fontSize: 16,
-            background: "#252b38",
-            color: "#fff"
-          }}
         />
-        <motion.button
-          type="submit"
-          whileHover={{ scale: 1.04, backgroundColor: "#36d1c4", color: "#232c31" }}
-          whileTap={{ scale: 0.98 }}
-          style={{
-            background: "#36a2eb",
-            color: "#fff",
-            border: "none",
-            borderRadius: 8,
-            padding: "12px 0",
-            fontWeight: 700,
-            fontSize: 18,
-            letterSpacing: 1,
-            marginTop: 6,
-            cursor: "pointer",
-            boxShadow: "0 1px 6px #232a3a40"
-          }}
-        >
-          {mode === 'login' ? 'Login' : 'Register'}
-        </motion.button>
+        <button type="submit"
+          style={{ borderRadius: 8, border: "none", background: "#36d1c4", color: "#222", padding: "10px 0", fontWeight: 700, fontSize: 18, cursor: "pointer" }}>
+          {isLogin ? "Login" : "Register"}
+        </button>
       </form>
-      <button
-        onClick={() => { setMode(mode === 'login' ? 'register' : 'login'); setMsg(''); }}
-        style={{
-          marginTop: 18,
-          background: "none",
-          border: "none",
-          color: "#36d1c4",
-          textDecoration: "underline",
-          cursor: "pointer",
-          fontWeight: 500,
-          fontSize: 15
-        }}
-      >
-        {mode === 'login' ? 'No account? Create one' : 'Have an account? Sign in'}
-      </button>
-      <div style={{ color: msg.includes("Registered") ? "#2bff8a" : "#ff6677", marginTop: 7, minHeight: 24, textAlign: "center" }}>{msg}</div>
-    </motion.div>
+      <div style={{ margin: "18px 0 7px 0", color: "#2bff8a", minHeight: 18, textAlign: "center" }}>{msg}</div>
+      <div style={{ textAlign: "center", color: "#b0e1f7", cursor: "pointer" }}
+        onClick={() => setIsLogin(!isLogin)}>
+        {isLogin ? "Need an account? Register" : "Already registered? Login"}
+      </div>
+    </div>
   );
 }
 
