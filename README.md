@@ -80,14 +80,10 @@ cd ../frontend
 
 4. Usage
 Register a new account
-
 Add your crypto coins and amounts (must use correct CoinGecko IDs!)
+View, convert, and manage your portfolio. Check analytics and top coins
 
-View, convert, and manage your portfolio
-
-Check analytics and top coins
-
-API Key / Rate Limits
+### API Key / Rate Limits
 This app uses CoinGecko's free public API for live data.
 Warning: CoinGecko enforces strict rate limits.
 
@@ -97,7 +93,7 @@ If you see "rate limit" errors, wait a minute before trying again.
 
 For production, consider using your own CoinGecko API key or another crypto API.
 
-Troubleshooting
+### Troubleshooting
 Live prices or analytics show blank or errors:
 You have hit the CoinGecko rate limit. Wait a minute and reload, or limit usage.
 
@@ -107,12 +103,10 @@ Make sure you are using a correct CoinGecko ID (see https://www.coingecko.com/en
 Backend errors:
 Ensure your database and backend are running with npm start in the /backend folder.
 
-Credits
+### Credits
 Ayoub Zeroual — Developer (@pat6h on GitHub)
-
 ALX Software Engineering Program — Capstone Project
-
 CoinGecko API for live crypto data
 
-License
+### License
 This project is for educational use as part of the ALX SE program.
