@@ -74,13 +74,14 @@ This will start the API at http://localhost:5000
 3. Install frontend dependencies
 Open a new terminal:
 
-bash
-Copy
-Edit
 cd ../frontend
 npm install
 npm start
 This will start the frontend at http://localhost:3000
+
+cd ../backend
+npm install
+npm start
 
 4. Usage
 Register a new account
