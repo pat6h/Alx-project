@@ -58,7 +58,7 @@ It allows users to:
 - Node.js & npm
 
 ### 1. **Clone the repo**
-
+```bash
 git clone https://github.com/pat6h/Alx-project.git
 cd Alx-project
 
@@ -92,7 +92,7 @@ Avoid rapid reloading or running multiple browser tabs.
 If you see "rate limit" errors, wait a minute before trying again.
 
 For production, consider using your own CoinGecko API key or another crypto API.
-
+```
 ### Troubleshooting
 Live prices or analytics show blank or errors:
 You have hit the CoinGecko rate limit. Wait a minute and reload, or limit usage.
