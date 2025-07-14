@@ -93,6 +93,7 @@ If you see "rate limit" errors, wait a minute before trying again.
 
 For production, consider using your own CoinGecko API key or another crypto API.
 ```
+
 ### Troubleshooting
 Live prices or analytics show blank or errors:
 You have hit the CoinGecko rate limit. Wait a minute and reload, or limit usage.
@@ -108,5 +109,4 @@ Ayoub Zeroual — Developer (@pat6h on GitHub)
 ALX Software Engineering Program — Capstone Project
 CoinGecko API for live crypto data
 
-### License
 This project is for educational use as part of the ALX SE program.
