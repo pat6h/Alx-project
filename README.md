@@ -65,16 +65,16 @@ cd Alx-project
 2. Install backend dependencies
 
 cd backend
-npm install
-npm start
+ npm install
+ npm start
 This will start the API at http://localhost:5000
 
 4. Install frontend dependencies
 Open a new terminal:
 
 cd ../frontend
-npm install
-npm start
+ npm install
+ npm start
 This will start the frontend at http://localhost:3000
 
 
