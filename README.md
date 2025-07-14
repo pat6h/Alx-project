@@ -59,19 +59,17 @@ It allows users to:
 
 ### 1. **Clone the repo**
 
-```bash
 git clone https://github.com/pat6h/Alx-project.git
 cd Alx-project
+
 2. Install backend dependencies
-bash
-Copy
-Edit
+
 cd backend
 npm install
 npm start
 This will start the API at http://localhost:5000
 
-3. Install frontend dependencies
+4. Install frontend dependencies
 Open a new terminal:
 
 cd ../frontend
@@ -79,9 +77,6 @@ npm install
 npm start
 This will start the frontend at http://localhost:3000
 
-cd ../backend
-npm install
-npm start
 
 4. Usage
 Register a new account
